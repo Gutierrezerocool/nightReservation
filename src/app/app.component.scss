@@ -1,0 +1,167 @@
+$dayBase: 50px;
+$base: 20px;
+.margin-top-10 {
+    margin-top: 10px;
+}
+
+.my-legend .legend-title {
+    text-align: left;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 90%;
+}
+
+.my-legend .legend-scale ul {
+    margin: 0;
+    margin-bottom: 5px;
+    padding: 0;
+    float: left;
+    list-style: none;
+}
+
+.my-legend .legend-scale ul li {
+    font-size: 80%;
+    list-style: none;
+    margin-left: 0;
+    line-height: 18px;
+    margin-bottom: 2px;
+}
+
+.my-legend ul.legend-labels li span {
+    display: block;
+    float: left;
+    height: 16px;
+    width: 30px;
+    margin-right: 5px;
+    margin-left: 0;
+    border: 1px solid #999;
+}
+
+.my-legend .legend-source {
+    font-size: 70%;
+    color: #999;
+    clear: both;
+}
+
+.my-legend a {
+    color: #777;
+}
+
+.calendar {
+    display: block;
+    width: $dayBase * 7;
+    margin: 0 auto;
+    * {
+        box-sizing: border-box;
+    }
+    .calendar-navs {
+        background-color: brown;
+        border-style: solid;
+        border-width: 5px;
+        color: white;
+    }
+    .month-nav {
+        padding: $base;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        button {
+            color: black !important;
+        }
+    }
+    .year-nav {
+        padding: $base;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        font-family: 'Montserrat';
+        button {
+            color: black !important;
+        }
+    }
+    .month-grid {
+        .day-names {
+            display: flex;
+            flex-direction: row;
+            background: greenyellow;
+            border-bottom-right-radius: 3px;
+            border-bottom-left-radius: 3px;
+        }
+        .weeks {
+            display: flex;
+            flex-direction: column;
+        }
+        .week {
+            display: flex;
+            flex-direction: row;
+        }
+        .week-date,
+        .day-name {
+            text-align: center;
+            padding: $base;
+            display: block;
+            width: $dayBase;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .week-date {
+            height: $dayBase;
+            position: relative;
+            .date-text {
+                z-index: 10;
+                font-size: 10px;
+                font-family: 'Montserrat', sans-serif;
+            }
+            &::after {
+                content: '';
+                height: $dayBase * 0.9;
+                width: $dayBase * 0.9;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                border-radius: 50%;
+                transition: background-color 150ms linear, color 150ms linear;
+                z-index: 1;
+            }
+            &.enabled {
+                cursor: pointer;
+                &:hover {
+                    &:after {
+                        background-color: lightblue;
+                    }
+                }
+            }
+            &.selected {
+                color: white;
+                background-color: white;
+                border-radius: 25px;
+                &:after {
+                    background-color: brown;
+                }
+                &:hover {
+                    &:after {
+                        background-color: brown;
+                    }
+                }
+            }
+            &.disabled {
+                color: black;
+            }
+            &.disabled-prev {
+                color: red;
+            }
+            &.available {
+                background-color: lightgreen;
+                border-radius: 25px !important;
+            }
+        }
+        .today {
+            font-weight: bold;
+            color: blue !important;
+            background-color: yellow !important;
+            border-radius: 25px !important;
+        }
+    }
+}

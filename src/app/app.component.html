@@ -1,20 +1,103 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<div class="container">
+    <div class="row margin-top-10">
+        <div class="col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Calendar <span class="glyphicon glyphicon-calendar"></span></div>
+                <div class="panel-body">
+                    <div class="calendar">
+                        <div class="calendar-navs">
+                            <div class="month-nav">
+                                <button (click)="prevMonth()">&lt;</button>
+                                <span class="p4">{{ currentDate.format('MMMM') }}</span>
+                                <button (click)="nextMonth()">&gt;</button>
+                            </div>
+                            <div class="year-nav">
+                                <button (click)="prevYear()">&lt;</button>
+                                <span>{{ currentDate.format('YYYY') }}</span>
+                                <button (click)="nextYear()">&gt;</button>
+                            </div>
+                        </div>
+                        <div class="month-grid">
+                            <div class="day-names">
+                                <div *ngFor="let name of dayNames" class="day-name p9">
+                                    {{ name }}
+                                </div>
+                            </div>
+                            <div class="weeks margin-top-10">
+                                <div *ngFor="let week of weeks" class="week">
+                                    <ng-container *ngFor="let day of week">
+                                        <div class="week-date disabled-prev" *ngIf="!isSelectedMonth(day.mDate)">
+                                            <span class="date-text">{{ day.mDate.date() }}</span>
+                                        </div>
+                                        <div class="week-date enabled" *ngIf="isSelectedMonth(day.mDate)" (click)="selectDate(day)" [ngClass]="{ today: day.today, selected: day.selected, disabled: day.mDate < currentDate, available: available }">
+                                            <span class="date-text">{{ day.mDate.date() }}</span>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </div>
 
+                        <div *ngIf="clicked" class="alert margin-top-10" [ngClass]="ocupied ? 'alert-danger' : 'alert-warning'">
+                            <div *ngIf="ocupied"><strong>It's Busy</strong> the night of {{ selectedDate }} is rented by client {{ selectedClient }}, paying with: {{ selectedPayment }}</div>
+                            <div *ngIf="!ocupied"><strong>It's Available</strong> the night is available for renting</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div *ngIf="ocupied" class="alert alert-warning">
+                <strong>The night is busy, please choose another date to schedule a client's reservation</strong>
+            </div>
+            <div *ngIf="!ocupied" class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Booking formulary <span class="glyphicon glyphicon-list-alt"></span></h3>
+                </div>
+                <div class="panel-body">
+                    <form (ngSubmit)="guardar()" #forma="ngForm">
+                        <div class="form-group">
+                            <label>Client</label>
+                            <input [(ngModel)]="heroe.client" type="text" name="nombre" class="form-control" placeholder="Clients name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Date</label>
+                            <input class="form-control" value="{{ heroe.date }}" disabled required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Payment</label>
+                            <select name="payment" class="form-control" [(ngModel)]="heroe.payment" required>
+                            <option value="" disabled selected>Select your option</option>
+                            <option>cash</option>
+                            <option>credit card</option>
+                            <option>debit card</option>
+                        </select>
+                        </div>
+
+                        <div class="form-group">
+                            <button [disabled]="!forma.valid" type="submit" class="btn btn-outline-success">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Colors legend</h3>
+                </div>
+                <div class="panel-body">
+                    <div class='my-legend'>
+                        <div class='legend-scale'>
+                            <ul class='legend-labels'>
+                                <li><span style='background:brown'></span>Busy nights</li>
+                                <li><span style='background:yellow;'></span>Current day</li>
+                                <li><span style='background:lightgreen;'></span>Available night</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
