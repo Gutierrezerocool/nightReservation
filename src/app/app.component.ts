@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { Heroe } from '../app/heroe.interface';
+import { Heroe } from './heroe.interface';
 import * as moment from 'moment';
 import * as _ from 'lodash';
 
@@ -56,6 +56,7 @@ export class AppComponent implements  OnInit, OnChanges {
   constructor() {}
 
   ngOnInit(): void {
+    sessionStorage.setItem('datos', JSON.stringify(this.calendaryDays));
     this.generateCalendar();
   }
 
@@ -72,7 +73,7 @@ export class AppComponent implements  OnInit, OnChanges {
   guardar() {
     this.calendaryDays.push(this.heroe);
     sessionStorage.setItem('datos', JSON.stringify(this.calendaryDays));
-    location.reload();
+    this.generateCalendar();
   }
 
   // date checkers
