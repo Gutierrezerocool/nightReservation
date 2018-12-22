@@ -1,4 +1,4 @@
-export interface Heroe {
+export interface Registration {
     client: string;
     payment: string;
     date: string;

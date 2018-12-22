@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { Heroe } from './heroe.interface';
+import { Registration } from './registration.interface';
 import * as moment from 'moment';
 import * as _ from 'lodash';
 
@@ -40,7 +40,7 @@ export class AppComponent implements  OnInit, OnChanges {
     }
   ];
 
-  heroe: Heroe = {
+  registration: Registration = {
     client: '',
     payment: '',
     date: '',
@@ -71,7 +71,7 @@ export class AppComponent implements  OnInit, OnChanges {
   }
 
   guardar() {
-    this.calendaryDays.push(this.heroe);
+    this.calendaryDays.push(this.registration);
     sessionStorage.setItem('datos', JSON.stringify(this.calendaryDays));
     this.generateCalendar();
   }
@@ -105,7 +105,7 @@ export class AppComponent implements  OnInit, OnChanges {
         return this.ocupied = true;
       }
     });
-    this.heroe.date = date.mDate.format('L');
+    this.registration.date = date.mDate.format('L');
   }
 
   // actions from calendar

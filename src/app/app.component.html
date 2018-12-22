@@ -58,17 +58,17 @@
                     <form (ngSubmit)="guardar()" #forma="ngForm">
                         <div class="form-group">
                             <label>Client</label>
-                            <input [(ngModel)]="heroe.client" type="text" name="nombre" class="form-control" placeholder="Clients name" required>
+                            <input [(ngModel)]="registration.client" type="text" name="nombre" class="form-control" placeholder="Clients name" required>
                         </div>
 
                         <div class="form-group">
                             <label>Date</label>
-                            <input class="form-control" value="{{ heroe.date }}" disabled required>
+                            <input class="form-control" value="{{ registration.date }}" disabled required>
                         </div>
 
                         <div class="form-group">
                             <label>Payment</label>
-                            <select name="payment" class="form-control" [(ngModel)]="heroe.payment" required>
+                            <select name="payment" class="form-control" [(ngModel)]="registration.payment" required>
                             <option value="" disabled selected>Select your option</option>
                             <option>cash</option>
                             <option>credit card</option>
